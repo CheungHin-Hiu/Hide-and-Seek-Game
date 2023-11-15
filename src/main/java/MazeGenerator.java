@@ -35,6 +35,7 @@ class MazeGenerator {
         return sb.toString();
     }
 
+
     public String getSymbolicMaze() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < dimension; i++) {
@@ -46,6 +47,8 @@ class MazeGenerator {
         }
         return sb.toString();
     }
+
+
 
     private boolean validNextNode(Node node) {
         int numNeighboringOnes = 0;
@@ -90,5 +93,12 @@ class MazeGenerator {
 
     private Boolean pointNotNode(Node node, int x, int y) {
         return !(x == node.x && y == node.y);
+    }
+
+    public int[][] getMaze(){
+        return maze;
+    }
+    public int getDimension(){
+        return dimension;
     }
 }
