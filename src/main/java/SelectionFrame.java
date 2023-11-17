@@ -74,6 +74,7 @@ public class SelectionFrame extends JFrame implements ActionListener {
             autoCreateFrame.setVisible(true);
         } else if (e.getSource() == exitGame) {
             this.dispose();
+            Window testFrame = new Window(main.maze.getMaze());
         }
 
     }
