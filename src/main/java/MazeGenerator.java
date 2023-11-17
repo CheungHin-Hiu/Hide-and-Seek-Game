@@ -101,4 +101,8 @@ class MazeGenerator {
     public int getDimension(){
         return dimension;
     }
+
+    public void changeMaze(int [][] maze){
+        this.maze = maze;
+    }
 }

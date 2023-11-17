@@ -67,6 +67,7 @@ public class EntryFrame extends JFrame implements ActionListener {
         }
         else if (e.getSource() == endButton) {
             this.dispose();
+
         }
     }
 }
