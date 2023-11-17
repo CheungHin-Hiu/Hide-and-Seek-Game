@@ -1,7 +1,12 @@
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
-public class main {
-   public static void main(String[] args)
-   {
-   }
+public class Main {
+
+    public static void main(String[] args) {
+
+        //Create the starting menu
+        EntryFrame firstFrame = new EntryFrame();
+
+    }
 }
