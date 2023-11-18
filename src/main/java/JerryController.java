@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 public class JerryController extends Thread{
     ArrayList<ArrayList<DataOfSquare>> Squares = new ArrayList<ArrayList<DataOfSquare>>();
-    Position JerryPosition;
+    public static Position JerryPosition;
     Position Exit;
     long JerrySpeed = 100;
     public static int JerryDirection;
+    static public Boolean jerryWin = false;
 
     JerryController(Position entryPoint, Position exitPoint)
     {
@@ -22,7 +23,6 @@ public class JerryController extends Thread{
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
-            System.out.println("JerryPos:" + JerryPosition.x + ", " + JerryPosition.y);
             checkWinning();
         }
     }
@@ -58,7 +58,6 @@ public class JerryController extends Thread{
                 nextPosition = new Position(JerryPosition.x + 1, JerryPosition.y );
                 break;
         }
-        System.out.println("NextPosition:" + nextPosition.x + "," + nextPosition.y);
         if(checkMove(nextPosition)){
             Squares.get(JerryPosition.x).get(JerryPosition.y).lightMeUp(0);
             JerryPosition.changePosition(nextPosition.x, nextPosition.y);
@@ -67,12 +66,22 @@ public class JerryController extends Thread{
     }
 
     private void checkWinning(){
-        if(JerryPosition.x == Exit.x && JerryPosition.y == Exit.y)
+        if(JerryPosition.x == Exit.x && JerryPosition.y == Exit.y) {
+            jerryWin = true;
             stopTheGame();
+        }
+        else if (TomController.tomWin == true){
+            stopTheGame2();
+        }
     }
 
     private void stopTheGame(){
         System.out.println("Jerry Wins!\n");
+        while (true){
+            pauser();
+        }
+    }
+    private void stopTheGame2(){
         while (true){
             pauser();
         }

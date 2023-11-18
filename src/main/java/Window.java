@@ -52,9 +52,11 @@ public class Window extends  JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         JerryController c = new JerryController(entry, exit);
-
+        TomController j = new TomController(exit, entry);
 
         c.start();
+        j.start();
+
 
         this.addKeyListener((KeyListener) new KeyBoardListener());
     }

@@ -1,8 +1,8 @@
 public class Position {
-    public int x;      //X-coordiante of the character
-    public int y;      //Y-coordiante of the character
+    public int x;
+    public int y;
 
-    public Position(int x, int y){
+    Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -15,14 +15,5 @@ public class Position {
         this.x = x;
         this.y = y;
     }
-
-    public int getX(){
-        return x;
-    }
-
-    public int getY(){
-        return y;
-    }
-
 
 }
