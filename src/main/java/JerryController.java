@@ -17,13 +17,13 @@ public class JerryController extends Thread{
     }
     public void run(){
         while(true){
+            checkWinning();
             moveJerry(JerryDirection);
             try{
                 JerryController.sleep(JerrySpeed);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
-            checkWinning();
         }
     }
     private void pauser(){

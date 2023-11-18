@@ -15,21 +15,18 @@ public class TomController extends Thread{
         Position start = new Position(exitPoint.x, exitPoint.y);
         Position end = new Position(entryPoint.x, entryPoint.y);
         path = sp1.generateShortestPath(main.array,start, end);
-        for(int i = 0; i<path.length;i++){
-            System.out.println(path[i].x + ", " + path[i].y);
-        }
     }
 
     public void run(){
         while(true) {
+            checkWinning();
             moveTom();
-
             try {
                 TomController.sleep(tomSpeed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            checkWinning();
+
         }
     }
 

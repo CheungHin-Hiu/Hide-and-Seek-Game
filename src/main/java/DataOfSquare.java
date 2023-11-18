@@ -10,6 +10,7 @@ public class DataOfSquare {
         C.add(Color.black);
         C.add(new Color(0xFFA500));
         C.add(Color.blue);
+        C.add(Color.green);
 
         this.color = color;
         grid = new MazeGrid(C.get(color));
