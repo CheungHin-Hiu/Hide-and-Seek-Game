@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 class MazeGenerator {
 
-    private Stack<Node> stack = new Stack<>();
+    private Stack<Position> stack = new Stack<>();
     private Random rand = new Random();
     private int[][] maze;
     private int dimension;
@@ -16,12 +16,12 @@ class MazeGenerator {
     }
 
     public void generateMaze() {
-        stack.push(new Node(0,0));
+        stack.push(new Position(0,0));
         while (!stack.empty()) {
-            Node next = stack.pop();
+            Position next = stack.pop();
             if (validNextNode(next)) {
                 maze[next.y][next.x] = 1;
-                ArrayList<Node> neighbors = findNeighbors(next);
+                ArrayList<Position> neighbors = findNeighbors(next);
                 randomlyAddNodesToStack(neighbors);
             }
         }
@@ -50,33 +50,33 @@ class MazeGenerator {
 
 
 
-    private boolean validNextNode(Node node) {
+    private boolean validNextNode(Position position) {
         int numNeighboringOnes = 0;
-        for (int y = node.y-1; y < node.y+2; y++) {
-            for (int x = node.x-1; x < node.x+2; x++) {
-                if (pointOnGrid(x, y) && pointNotNode(node, x, y) && maze[y][x] == 1) {
+        for (int y = position.y-1; y < position.y+2; y++) {
+            for (int x = position.x-1; x < position.x+2; x++) {
+                if (pointOnGrid(x, y) && pointNotNode(position, x, y) && maze[y][x] == 1) {
                     numNeighboringOnes++;
                 }
             }
         }
-        return (numNeighboringOnes < 3) && maze[node.y][node.x] != 1;
+        return (numNeighboringOnes < 3) && maze[position.y][position.x] != 1;
     }
 
-    private void randomlyAddNodesToStack(ArrayList<Node> nodes) {
+    private void randomlyAddNodesToStack(ArrayList<Position> positions) {
         int targetIndex;
-        while (!nodes.isEmpty()) {
-            targetIndex = rand.nextInt(nodes.size());
-            stack.push(nodes.remove(targetIndex));
+        while (!positions.isEmpty()) {
+            targetIndex = rand.nextInt(positions.size());
+            stack.push(positions.remove(targetIndex));
         }
     }
 
-    private ArrayList<Node> findNeighbors(Node node) {
-        ArrayList<Node> neighbors = new ArrayList<>();
-        for (int y = node.y-1; y < node.y+2; y++) {
-            for (int x = node.x-1; x < node.x+2; x++) {
-                if (pointOnGrid(x, y) && pointNotCorner(node, x, y)
-                        && pointNotNode(node, x, y)) {
-                    neighbors.add(new Node(x, y));
+    private ArrayList<Position> findNeighbors(Position position) {
+        ArrayList<Position> neighbors = new ArrayList<>();
+        for (int y = position.y-1; y < position.y+2; y++) {
+            for (int x = position.x-1; x < position.x+2; x++) {
+                if (pointOnGrid(x, y) && pointNotCorner(position, x, y)
+                        && pointNotNode(position, x, y)) {
+                    neighbors.add(new Position(x, y));
                 }
             }
         }
@@ -87,12 +87,12 @@ class MazeGenerator {
         return x >= 0 && y >= 0 && x < dimension && y < dimension;
     }
 
-    private Boolean pointNotCorner(Node node, int x, int y) {
-        return (x == node.x || y == node.y);
+    private Boolean pointNotCorner(Position position, int x, int y) {
+        return (x == position.x || y == position.y);
     }
 
-    private Boolean pointNotNode(Node node, int x, int y) {
-        return !(x == node.x && y == node.y);
+    private Boolean pointNotNode(Position position, int x, int y) {
+        return !(x == position.x && y == position.y);
     }
 
     public int[][] getMaze(){
