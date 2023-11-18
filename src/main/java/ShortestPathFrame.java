@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class ShortestPathFrame extends JFrame implements KeyListener {
 
     Position entry;
     Position exit;
-    shortest_path sp1 = new shortest_path();
+    ShortestPath sp1 = new ShortestPath();
     Position[] path;
 
 

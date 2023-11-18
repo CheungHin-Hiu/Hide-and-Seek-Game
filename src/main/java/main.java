@@ -11,7 +11,7 @@ public class main {
     static int [][] array;
     static MazeGenerator maze;
     public static void main(String[] args) {
-        String path = "C:\\Users\\andy2\\IdeaProjects\\Comp3111F23G59\\MazaMap_TnJ.csv";
+        String path = "C:\\Users\\asus\\Desktop\\Academic\\UST\\academic\\Year 3\\COMP3111\\Lab\\Comp3111F23G59\\MazaMap_TnJ.csv";
         String line ="";
         String cvsSplitBy = ",";
         List<List<Integer>> records = new ArrayList<>();

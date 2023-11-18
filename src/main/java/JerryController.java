@@ -7,6 +7,13 @@ public class JerryController extends Thread{
     public static int JerryDirection;
     static public Boolean jerryWin = false;
 
+
+     /**
+     * Jerry Controller initialize the Jerry object
+     * @param entryPoint Jerry starts from the start of the maze
+     * @param exitPoint Jerry destination is the end of the maze
+     */
+
     JerryController(Position entryPoint, Position exitPoint)
     {
         Squares = Window.Grid;
@@ -42,6 +49,10 @@ public class JerryController extends Thread{
         return true;
     }
 
+    /**
+     * moveJerry is for moving Jerry in four directions, Jerry will check is it can move before moving
+     * @param dir moves in one of the following direction, either up, down, left or right
+     */
     private void moveJerry(int dir){
         Position nextPosition = null;
         switch(dir){
