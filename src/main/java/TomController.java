@@ -5,9 +5,15 @@ public class TomController extends Thread{
     Position tomPosition;
     Position targetPosition;
     long tomSpeed = 270;
-    shortest_path sp1 = new shortest_path();
+    ShortestPath sp1 = new ShortestPath();
     Position[] path;
     static public Boolean tomWin = false;
+
+    /**
+     * TomController initialize the Tom object
+     * @param exitPoint Tom starts from the exit of the maze
+     * @param entryPoint Tom target destination is Jerry's position, which is equivalent to entry of the maze
+     */
     TomController(Position exitPoint, Position entryPoint){
         Squares = Window.Grid;
         tomPosition = new Position(exitPoint);
@@ -38,6 +44,9 @@ public class TomController extends Thread{
         }
     }
 
+    /**
+     * The moveTom operation moves Tom's position, calls the ShortestPath to move near Jerry
+     */
     private void moveTom(){
         System.out.println("TomPos:" + tomPosition.x + ", " + tomPosition.y);
         Position nextPosition = new Position(path[1].x, path[1].y);
