@@ -148,4 +148,27 @@ public class MazeGenerator {
             System.out.println();
         }
     }
+
+    private Boolean pointOnGrid(int x, int y) {
+        return x >= 0 && y >= 0 && x < dimension && y < dimension;
+    }
+
+    private Boolean pointNotCorner(Position position, int x, int y) {
+        return (x == position.x || y == position.y);
+    }
+
+    private Boolean pointNotNode(Position position, int x, int y) {
+        return !(x == position.x && y == position.y);
+    }
+
+    public int[][] getMaze(){
+        return maze;
+    }
+    public int getDimension(){
+        return dimension;
+    }
+
+    public void changeMaze(int [][] maze){
+        this.maze = maze;
+    }
 }
