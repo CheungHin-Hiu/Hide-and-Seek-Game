@@ -64,8 +64,8 @@ public class MazeGenerator {
         maze[y][x] = 0; // Mark cell as part of the maze
 
         // all checking do not include maze boarder
-        if (x > 0) walls.add(new Wall(x - 1, y, -1, 0)); // Left wall
-        if (y > 0) walls.add(new Wall(x, y - 1, 0, -1)); // Top wall
+        if (x > 0) walls.add(new Wall(x - 1, y, -1, 0));            // Left wall
+        if (y > 0) walls.add(new Wall(x, y - 1, 0, -1));            // Top wall
         if (x < dimension - 1) walls.add(new Wall(x + 1, y, 1, 0)); // Right wall
         if (y < dimension - 1) walls.add(new Wall(x, y + 1, 0, 1)); // Bottom wall
     }
@@ -77,20 +77,20 @@ public class MazeGenerator {
                 possibleEndPointPositions.add(new Position(dimension - 1, y));
             }
         }
-        Collections.shuffle(possibleEndPointPositions); // Randomize the list
+        Collections.shuffle(possibleEndPointPositions);         // Randomize the list
         Position pos = possibleEndPointPositions.get(0);
-        maze[pos.y][pos.x] = 0; // Turn the wall into a path
-        end.x = pos.x; //update end point
+        maze[pos.y][pos.x] = 0;                                 // Turn the wall into a path
+        end.x = pos.x;                                          //update end point
         end.y = pos.y;
     }
 
     // Computes the sum of walls surrounding a given cell
     private int getWeightedSurroundingVertexSum(int x, int y) {
         int sum = 0;
-        if (x > 0 && maze[y][x - 1] == 1) sum += 3; // Check left
-        if (x < dimension - 1 && maze[y][x + 1] == 1) sum += 3; // Check right
-        if (y > 0 && maze[y - 1][x] == 1) sum += 2; // Check above
-        if (y < dimension - 1 && maze[y + 1][x] == 1) sum += 2; // Check below
+        if (x > 0 && maze[y][x - 1] == 1) sum += 3;                 // Check left
+        if (x < dimension - 1 && maze[y][x + 1] == 1) sum += 3;     // Check right
+        if (y > 0 && maze[y - 1][x] == 1) sum += 2;                 // Check above
+        if (y < dimension - 1 && maze[y + 1][x] == 1) sum += 2;     // Check below
         return sum;
     }
 
@@ -103,9 +103,7 @@ public class MazeGenerator {
         List<Position> breakableWallPositions = new ArrayList<>();
         for (int y = 1; y < dimension - 1; y++) {
             for (int x = 1; x < dimension - 1; x++) {
-                if (isStraightWall(x, y)){
-                    breakableWallPositions.add(new Position(x, y));
-                }
+                if (isStraightWall(x, y)) breakableWallPositions.add(new Position(x, y));
             }
         }
 
@@ -119,11 +117,10 @@ public class MazeGenerator {
     public void printBreakableWallMaze() {
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
-                if (maze[y][x] == 1) { // It's a wall
+                if (maze[y][x] == 1)  // It's a wall
                     System.out.print(isStraightWall(x,y) ? " 2 " : " " + maze[y][x] + " ");
-                }else{
+                else
                     System.out.print("   ");
-                }
             }
             System.out.println();
         }
@@ -143,7 +140,14 @@ public class MazeGenerator {
     public void printSymbolicMaze() {
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
-                    System.out.print(maze[y][x] == 0 ? "   " : " " + maze[y][x] + " "); // Path or wall
+                if (x == start.x && y == start.y)
+                    System.out.print(" I ");
+                else if (x == end.x && y == end.y)
+                    System.out.print(" O ");
+                else if (maze[y][x] == 1)
+                    System.out.print(" * ");
+                else
+                    System.out.print("   ");
             }
             System.out.println();
         }
