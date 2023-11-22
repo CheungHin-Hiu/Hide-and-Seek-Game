@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class MazeGenerator {
-    private int[][] maze;
+    public int[][] maze;
     private int dimension;
     private List<Wall> walls;
     private Random rand = new Random();
