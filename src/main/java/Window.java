@@ -13,6 +13,7 @@ public class Window extends  JFrame{
     public Window(int[][] maze){
 
 
+
         Grid = new ArrayList<ArrayList<DataOfSquare>>();
         ArrayList<DataOfSquare> data;
         for(int i = 0; i<height; i++){
@@ -53,11 +54,10 @@ public class Window extends  JFrame{
         this.setResizable(false);
         JerryController c = new JerryController(entry, exit);
         TomController j = new TomController(exit, entry);
-
+        WinCheck w = new WinCheck();
         c.start();
         j.start();
-
-
+        w.start();
         this.addKeyListener((KeyListener) new KeyBoardListener());
     }
 }
