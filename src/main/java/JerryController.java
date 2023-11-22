@@ -2,10 +2,11 @@ import java.util.ArrayList;
 public class JerryController extends Thread{
     ArrayList<ArrayList<DataOfSquare>> Squares = new ArrayList<ArrayList<DataOfSquare>>();
     public static Position JerryPosition;
-    Position Exit;
+    public static Position Exit;
     long JerrySpeed = 100;
     public static int JerryDirection;
-    static public Boolean jerryWin = false;
+    Boolean running = true;
+
 
 
      /**
@@ -23,14 +24,14 @@ public class JerryController extends Thread{
         JerryDirection = 1;
     }
     public void run(){
-        while(true){
+        while(running){
             checkWinning();
-            moveJerry(JerryDirection);
             try{
                 JerryController.sleep(JerrySpeed);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
+                moveJerry(JerryDirection);
         }
     }
     private void pauser(){
@@ -54,47 +55,46 @@ public class JerryController extends Thread{
      * @param dir moves in one of the following direction, either up, down, left or right
      */
     private void moveJerry(int dir){
-        Position nextPosition = null;
-        switch(dir){
-            case 1:
-                nextPosition = new Position(JerryPosition.x , JerryPosition.y-1);
-                break;
-            case 2:
-                nextPosition = new Position(JerryPosition.x - 1, JerryPosition.y );
-                break;
-            case 3:
-                nextPosition = new Position(JerryPosition.x , JerryPosition.y + 1);
-                break;
-            case 4:
-                nextPosition = new Position(JerryPosition.x + 1, JerryPosition.y );
-                break;
-        }
-        if(checkMove(nextPosition)){
-            Squares.get(JerryPosition.x).get(JerryPosition.y).lightMeUp(0);
-            JerryPosition.changePosition(nextPosition.x, nextPosition.y);
-            Squares.get(JerryPosition.x).get(JerryPosition.y).lightMeUp(2);
-        }
+            Position nextPosition = null;
+            switch (dir) {
+                case 1:
+                    nextPosition = new Position(JerryPosition.x, JerryPosition.y - 1);
+                    break;
+                case 2:
+                    nextPosition = new Position(JerryPosition.x - 1, JerryPosition.y);
+                    break;
+                case 3:
+                    nextPosition = new Position(JerryPosition.x, JerryPosition.y + 1);
+                    break;
+                case 4:
+                    nextPosition = new Position(JerryPosition.x + 1, JerryPosition.y);
+                    break;
+            }
+            if (checkMove(nextPosition)) {
+                Squares.get(JerryPosition.x).get(JerryPosition.y).lightMeUp(0);
+                JerryPosition.changePosition(nextPosition.x, nextPosition.y);
+                Squares.get(JerryPosition.x).get(JerryPosition.y).lightMeUp(2);
+                main.gameMaze.maze[JerryPosition.x][JerryPosition.y] = 2;
+            }
     }
 
     private void checkWinning(){
-        if(JerryPosition.x == Exit.x && JerryPosition.y == Exit.y) {
-            jerryWin = true;
-            stopTheGame();
-        }
-        else if (TomController.tomWin == true){
-            stopTheGame2();
-        }
-    }
 
+            if (WinCheck.jerryWin == true) {
+                stopTheGame();
+            } else if (WinCheck.tomWin == true) {
+                stopTheGame2();
+            }
+
+
+    }
     private void stopTheGame(){
         System.out.println("Jerry Wins!\n");
-        while (true){
-            pauser();
-        }
+        running = false;
+        main.gameWindow.dispose();
+        EntryFrame f1 = new EntryFrame();
     }
     private void stopTheGame2(){
-        while (true){
-            pauser();
-        }
+        running = false;
     }
 }

@@ -1,13 +1,18 @@
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class TomController extends Thread{
     ArrayList<ArrayList<DataOfSquare>> Squares = new ArrayList<ArrayList<DataOfSquare>>();
-    Position tomPosition;
-    Position targetPosition;
-    long tomSpeed = 270;
+    public static Position tomPosition;
+    public static Position targetPosition;
+    long tomSpeed = 200;
     ShortestPath sp1 = new ShortestPath();
     Position[] path;
-    static public Boolean tomWin = false;
+
+    Boolean running = true;
+
+
 
     /**
      * TomController initialize the Tom object
@@ -15,24 +20,24 @@ public class TomController extends Thread{
      * @param entryPoint Tom target destination is Jerry's position, which is equivalent to entry of the maze
      */
     TomController(Position exitPoint, Position entryPoint){
+
         Squares = Window.Grid;
         tomPosition = new Position(exitPoint);
         targetPosition = new Position(entryPoint);
         Position start = new Position(exitPoint.x, exitPoint.y);
         Position end = new Position(entryPoint.x, entryPoint.y);
-        path = sp1.generateShortestPath(main.array,start, end);
+        path = sp1.generateShortestPath(main.gameMaze.getMaze(), start, end);
     }
 
     public void run(){
-        while(true) {
+        while(running) {
             checkWinning();
-            moveTom();
             try {
                 TomController.sleep(tomSpeed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            moveTom();
         }
     }
 
@@ -48,37 +53,40 @@ public class TomController extends Thread{
      * The moveTom operation moves Tom's position, calls the ShortestPath to move near Jerry
      */
     private void moveTom(){
-        System.out.println("TomPos:" + tomPosition.x + ", " + tomPosition.y);
-        Position nextPosition = new Position(path[1].x, path[1].y);
-        System.out.println("NextPosition:" + nextPosition.x + "," + nextPosition.y);
-        Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(0);
-        tomPosition.changePosition(nextPosition.x, nextPosition.y);
-        Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(3);
-        targetPosition = new Position(JerryController.JerryPosition.x, JerryController.JerryPosition.y);
-        Position start = new Position(tomPosition.x, tomPosition.y);
-        Position end = new Position(targetPosition.x, targetPosition.y);
-        path = sp1.generateShortestPath(main.array,start, end);
+
+            if (path.length > 1) {
+                Position nextPosition = new Position(path[1].x, path[1].y);
+                Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(0);
+
+                tomPosition.changePosition(nextPosition.x, nextPosition.y);
+                Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(3);
+
+            }
+            targetPosition = new Position(JerryController.JerryPosition.x, JerryController.JerryPosition.y);
+            Position start = new Position(tomPosition.x, tomPosition.y);
+            Position end = new Position(targetPosition.x, targetPosition.y);
+            path = sp1.generateShortestPath(main.gameMaze.getMaze(), start, end);
+
     }
 
     private void checkWinning(){
-        if(tomPosition.x == targetPosition.x && tomPosition.y == targetPosition.y) {
-            tomWin = true;
-            stopTheGame();
-        } else if (JerryController.jerryWin == true) {
-            stopTheGame2();
-        }
+            if (WinCheck.tomWin) {
+                stopTheGame();
+            } else if (WinCheck.jerryWin) {
+                stopTheGame2();
+            }
+
     }
 
     private void stopTheGame(){
         System.out.println("Tom Wins");
-        while(true){
-            pauser();
-        }
+        running = false;
+        main.gameWindow.dispose();
     }
     private void stopTheGame2(){
-        while (true){
-            pauser();
-        }
+        running = false;
     }
+
+
 
 }

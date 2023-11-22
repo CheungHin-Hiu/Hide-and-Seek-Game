@@ -73,7 +73,7 @@ public class ShortestPathFrame extends JFrame implements KeyListener {
         if(e.getKeyCode() != 0){
             this.dispose();
 
-            Window gameWindow = new Window(main.maze.getMaze());
+            main.gameWindow = new Window(main.gameMaze.getMaze());
         }
     }
 

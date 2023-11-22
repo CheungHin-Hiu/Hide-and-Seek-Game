@@ -2,6 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectionFrame extends JFrame implements ActionListener {
     JButton manualCreate;
     JButton autoCreate;
@@ -70,11 +76,41 @@ public class SelectionFrame extends JFrame implements ActionListener {
         }
         else if(e.getSource() == autoCreate){
             this.dispose();
-            JFrame autoCreateFrame = new JFrame();
-            autoCreateFrame.setVisible(true);
+            MazeGenerator generator = new MazeGenerator(30); // Example size and positions
+            generator.generateMaze();
+            generator.addPaths(30);
+            main.gameMaze.changeMaze(generator.getMaze());
+            ShortestPathFrame autoMazePathFrame = new ShortestPathFrame(main.gameMaze.getMaze());
         } else if (e.getSource() == exitGame) {
+
             this.dispose();
-            ShortestPathFrame testFrame = new ShortestPathFrame(main.maze.getMaze());
+            String path = "MazaMap_TnJ.csv";
+            String line ="";
+            String cvsSplitBy = ",";
+            List<List<Integer>> records = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+                while ((line = br.readLine()) != null) {
+                    String[] values = line.split(cvsSplitBy);
+                    List<Integer> intValues = new ArrayList<>();
+                    for (String str : values) {
+                        intValues.add(Integer.parseInt(str.trim())); // trim whitespace before parsing
+                    }
+                    records.add(intValues);
+                }
+            } catch (IOException et) {
+                et.printStackTrace();
+            }
+
+            // Convert list of lists to 2D array
+            main.array = new int[records.size()][];
+            for (int i = 0; i < main.array.length; i++) {
+                main.array[i] = records.get(i).stream().mapToInt(j->j).toArray();
+            }
+            main.gameMaze = new MazeGenerator(30);
+            main.gameMaze.changeMaze(main.array);
+
+            ShortestPathFrame testFrame = new ShortestPathFrame(main.gameMaze.getMaze());
         }
 
     }
