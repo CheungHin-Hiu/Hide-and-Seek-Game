@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectionFrame extends JFrame implements ActionListener {
-    JButton manualCreate;
-    JButton autoCreate;
+    JButton classicMaze;
+    JButton randomMaze;
     JButton exitGame;
 
     SelectionFrame(){
@@ -18,7 +18,7 @@ public class SelectionFrame extends JFrame implements ActionListener {
         ImageIcon maze = new ImageIcon("Maze.png");
         //Jlabel
         JLabel label = new JLabel();
-        label.setText("Create Maze: Manual or Automatic");
+        label.setText("Classic Maze or Random Maze");
         label.setIcon(maze);
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.TOP);
@@ -29,21 +29,21 @@ public class SelectionFrame extends JFrame implements ActionListener {
         label.setVerticalAlignment(JLabel.CENTER);
         label.setBounds(50, 25, 500, 300);
 
-        manualCreate = new JButton();
-        manualCreate.setBounds(50, 350, 100, 50);
-        manualCreate.addActionListener(this);
-        manualCreate.setText("Manual Create");
-        manualCreate.setFocusable(false);
-        manualCreate.setFont(new Font("Comic Sans", Font.BOLD, 10));
-        manualCreate.setBorder(BorderFactory.createEtchedBorder());
+        classicMaze = new JButton();
+        classicMaze.setBounds(50, 350, 100, 50);
+        classicMaze.addActionListener(this);
+        classicMaze.setText("Classic Maze");
+        classicMaze.setFocusable(false);
+        classicMaze.setFont(new Font("Comic Sans", Font.BOLD, 10));
+        classicMaze.setBorder(BorderFactory.createEtchedBorder());
 
-        autoCreate = new JButton();
-        autoCreate.setBounds(250, 350, 100, 50);
-        autoCreate.addActionListener(this);
-        autoCreate.setText("Auto Create");
-        autoCreate.setFocusable(false);
-        autoCreate.setFont(new Font("Comic Sans", Font.BOLD, 10));
-        autoCreate.setBorder(BorderFactory.createEtchedBorder());
+        randomMaze = new JButton();
+        randomMaze.setBounds(250, 350, 100, 50);
+        randomMaze.addActionListener(this);
+        randomMaze.setText("Random Maze");
+        randomMaze.setFocusable(false);
+        randomMaze.setFont(new Font("Comic Sans", Font.BOLD, 10));
+        randomMaze.setBorder(BorderFactory.createEtchedBorder());
 
         exitGame = new JButton();
         exitGame.setBounds(450, 350, 100, 50);
@@ -60,8 +60,8 @@ public class SelectionFrame extends JFrame implements ActionListener {
         this.setSize(600, 600);
         this.setVisible(true);
         this.add(label);
-        this.add(manualCreate);
-        this.add(autoCreate);
+        this.add(classicMaze);
+        this.add(randomMaze);
         this.add(exitGame);
 
         this.setIconImage(image.getImage());
@@ -69,20 +69,7 @@ public class SelectionFrame extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        if(e.getSource() == manualCreate){
-            this.dispose();
-            JFrame manualCreateFrame = new JFrame();
-            manualCreateFrame.setVisible(true);
-        }
-        else if(e.getSource() == autoCreate){
-            this.dispose();
-            MazeGenerator generator = new MazeGenerator(30); // Example size and positions
-            generator.generateMaze();
-            generator.addPaths(30);
-            main.gameMaze.changeMaze(generator.getMaze());
-            ShortestPathFrame autoMazePathFrame = new ShortestPathFrame(main.gameMaze.getMaze());
-        } else if (e.getSource() == exitGame) {
-
+        if(e.getSource() == classicMaze){
             this.dispose();
             String path = "MazaMap_TnJ.csv";
             String line ="";
@@ -111,6 +98,18 @@ public class SelectionFrame extends JFrame implements ActionListener {
             main.gameMaze.changeMaze(main.array);
 
             ShortestPathFrame testFrame = new ShortestPathFrame(main.gameMaze.getMaze());
+        }
+        else if(e.getSource() == randomMaze){
+            this.dispose();
+            MazeGenerator generator = new MazeGenerator(30); // Example size and positions
+            generator.generateMaze();
+            generator.addPaths(30);
+            main.gameMaze.changeMaze(generator.getMaze());
+            ShortestPathFrame autoMazePathFrame = new ShortestPathFrame(main.gameMaze.getMaze());
+
+        } else if (e.getSource() == exitGame) {
+            this.dispose();
+
         }
 
     }

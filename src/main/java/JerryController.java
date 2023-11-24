@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 public class JerryController extends Thread{
     ArrayList<ArrayList<DataOfSquare>> Squares = new ArrayList<ArrayList<DataOfSquare>>();
@@ -32,13 +33,6 @@ public class JerryController extends Thread{
                 e.printStackTrace();
             }
                 moveJerry(JerryDirection);
-        }
-    }
-    private void pauser(){
-        try{
-            sleep(JerrySpeed);
-        }catch (InterruptedException e){
-            e.printStackTrace();
         }
     }
 
@@ -79,17 +73,14 @@ public class JerryController extends Thread{
     }
 
     private void checkWinning(){
-
             if (WinCheck.jerryWin == true) {
                 stopTheGame();
             } else if (WinCheck.tomWin == true) {
                 stopTheGame2();
             }
-
-
     }
     private void stopTheGame(){
-        System.out.println("Jerry Wins!\n");
+        JOptionPane.showMessageDialog(null, "You win! Congratulation!", "Match End", JOptionPane.INFORMATION_MESSAGE);
         running = false;
         main.gameWindow.dispose();
         EntryFrame f1 = new EntryFrame();
