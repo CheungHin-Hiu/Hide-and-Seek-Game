@@ -1,5 +1,11 @@
 import java.util.*;
 
+/**
+ * Generates a maze using a modified version of Prim's algorithm.
+ * The maze is represented as a 2D integer array where the value 0 indicates a path,
+ * and the value 1 indicates a wall. Entry and exit points can be specified.
+ */
+
 public class MazeGenerator {
     public int[][] maze;
     private int dimension;
@@ -8,11 +14,21 @@ public class MazeGenerator {
     private Position start;
     private Position end;
 
-    // Represents a wall between cells, with direction to the neighboring cell
+    /**
+     * Represents a wall between cells with a direction to the neighboring cell.
+     */
     private class Wall {
         int x, y; // Coordinates of the wall (x for column, y for row)
         int dx, dy; // Direction from the wall to the cell it might connect to
 
+        /**
+         * Constructs a new wall with a specified direction.
+         *
+         * @param x  X-coordinate of the wall.
+         * @param y  Y-coordinate of the wall.
+         * @param dx Delta X, representing the horizontal direction to the neighboring cell.
+         * @param dy Delta Y, representing the vertical direction to the neighboring cell.
+         */
         Wall(int x, int y, int dx, int dy) {
             this.x = x;
             this.y = y;
@@ -20,7 +36,11 @@ public class MazeGenerator {
             this.dy = dy;
         }
 
-        // Checks if the wall leads to a valid unvisited cell (not including maze boarder)
+        /**
+         * Checks if this wall leads to a valid, unvisited cell within the maze boundaries.
+         *
+         * @return true if the wall is valid, false otherwise.
+         */
         boolean isValid() {
             int nx = x + dx;
             int ny = y + dy;
@@ -28,24 +48,34 @@ public class MazeGenerator {
         }
     }
 
+    /**
+     * Initializes the maze generator with a specific dimension.
+     *
+     * @param dim The dimension for both width and height of the maze.
+     */
     public MazeGenerator(int dim) {
         dimension = dim;
         maze = new int[dim][dim];
         walls = new ArrayList<>();
-        // Randomize start and end positions within the maze bounds
+        // Randomize start position on the left side of the maze
+        // End position first holds dummy value and update in function updateEndPoint()
         start = new Position(0, rand.nextInt(dim - 2) + 1);
         end = new Position(0, 0);
         initializeMaze();
     }
 
-    // Initializes the maze with walls
+    /**
+     * Fills the maze with walls (value 1).
+     */
     private void initializeMaze() {
         for (int i = 0; i < dimension; i++) {
             Arrays.fill(maze[i], 1); // 1 represents a wall
         }
     }
 
-    // Generates the maze using Prim's algorithm
+    /**
+     * Generates the maze using the Prim's algorithm.
+     */
     public void generateMaze() {
         addWalls(start.x, start.y);
 
@@ -59,7 +89,12 @@ public class MazeGenerator {
         updateEndPoint();
     }
 
-    // Adds walls around a given cell to the list of walls
+    /**
+     * Adds walls to the list of potential walls to be converted to paths.
+     *
+     * @param x X-coordinate of the cell.
+     * @param y Y-coordinate of the cell.
+     */
     private void addWalls(int x, int y) {
         maze[y][x] = 0; // Mark cell as part of the maze
 
@@ -70,6 +105,9 @@ public class MazeGenerator {
         if (y < dimension - 1) walls.add(new Wall(x, y + 1, 0, 1)); // Bottom wall
     }
 
+    /**
+     * Randomly selects end points for the maze based on the configuration of the last row.
+     */
     private void updateEndPoint(){
         List<Position> possibleEndPointPositions = new ArrayList<>();
         for (int y = 1; y < dimension - 1; y++){
@@ -80,11 +118,19 @@ public class MazeGenerator {
         Collections.shuffle(possibleEndPointPositions);         // Randomize the list
         Position pos = possibleEndPointPositions.get(0);
         maze[pos.y][pos.x] = 0;                                 // Turn the wall into a path
-        end.x = pos.x;                                          //update end point
+        end.x = pos.x;                                          // Update end point
         end.y = pos.y;
     }
 
-    // Computes the sum of walls surrounding a given cell
+    /**
+     * Calculates the weighted sum of walls surrounding a given cell.
+     * Horizontal wall is weighted for 3.
+     * Vertical wall is weighted for 2.
+     *
+     * @param x X-coordinate of the cell.
+     * @param y Y-coordinate of the cell.
+     * @return The weighted sum of walls surrounding the cell.
+     */
     private int getWeightedSurroundingVertexSum(int x, int y) {
         int sum = 0;
         if (x > 0 && maze[y][x - 1] == 1) sum += 3;                 // Check left
@@ -94,11 +140,24 @@ public class MazeGenerator {
         return sum;
     }
 
+    /**
+     * Checks if a given cell is a straight wall based on the surrounding walls.
+     * For non-conjunction wall the weighted sum will be either 6 or 4.
+     *
+     * @param x X-coordinate of the cell.
+     * @param y Y-coordinate of the cell.
+     * @return true if the cell is a straight wall, false otherwise.
+     */
     private boolean isStraightWall(int x, int y) {
         int sum = getWeightedSurroundingVertexSum(x, y);
         return maze[y][x] == 1 && (sum == 6 || sum == 4);
     }
 
+    /**
+     * Adds additional paths to the maze by randomly breaking straight walls.
+     *
+     * @param numWallsToBreak The number of additional walls to convert into paths.
+     */
     public void addPaths(int numWallsToBreak) {
         List<Position> breakableWallPositions = new ArrayList<>();
         for (int y = 1; y < dimension - 1; y++) {
@@ -114,19 +173,9 @@ public class MazeGenerator {
         }
     }
 
-    public void printBreakableWallMaze() {
-        for (int y = 0; y < dimension; y++) {
-            for (int x = 0; x < dimension; x++) {
-                if (maze[y][x] == 1)  // It's a wall
-                    System.out.print(isStraightWall(x,y) ? " 2 " : " " + maze[y][x] + " ");
-                else
-                    System.out.print("   ");
-            }
-            System.out.println();
-        }
-    }
-
-    // Prints the raw numerical maze
+    /**
+     * Prints the raw numerical representation of the maze.
+     */
     public void printRawMaze() {
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
@@ -136,7 +185,9 @@ public class MazeGenerator {
         }
     }
 
-    // Prints a symbolic representation of the maze
+    /**
+     * Prints a symbolic representation of the maze with entry and exit points.
+     */
     public void printSymbolicMaze() {
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
@@ -153,25 +204,64 @@ public class MazeGenerator {
         }
     }
 
+    /**
+     * Checks if a point is within the bounds of the maze grid.
+     *
+     * @param x The x-coordinate of the point to check.
+     * @param y The y-coordinate of the point to check.
+     * @return {@code true} if the point is within the grid, {@code false} otherwise.
+     */
     private Boolean pointOnGrid(int x, int y) {
         return x >= 0 && y >= 0 && x < dimension && y < dimension;
     }
 
+    /**
+     * Determines whether the specified point is not a corner relative to the given position.
+     * A corner is defined as a point that does not share the same x or y coordinate as the position.
+     *
+     * @param position The reference position.
+     * @param x        The x-coordinate of the point to check.
+     * @param y        The y-coordinate of the point to check.
+     * @return {@code true} if the point is not a corner, {@code false} if it is a corner.
+     */
     private Boolean pointNotCorner(Position position, int x, int y) {
         return (x == position.x || y == position.y);
     }
 
+    /**
+     * Determines whether a point is not the same as the given position.
+     *
+     * @param position The position to compare against.
+     * @param x        The x-coordinate of the point to check.
+     * @param y        The y-coordinate of the point to check.
+     * @return {@code true} if the point is not the same as the position, {@code false} otherwise.
+     */
     private Boolean pointNotNode(Position position, int x, int y) {
         return !(x == position.x && y == position.y);
     }
 
+    /**
+     * Retrieves the maze grid as a 2D array of integers.
+     *
+     * @return The maze grid.
+     */
     public int[][] getMaze(){
         return maze;
     }
+    /**
+     * Retrieves the dimension of the maze.
+     *
+     * @return The dimension of the maze.
+     */
     public int getDimension(){
         return dimension;
     }
 
+    /**
+     * Replaces the current maze with a new maze configuration.
+     *
+     * @param maze The new maze grid to set.
+     */
     public void changeMaze(int [][] maze){
         this.maze = maze;
     }
