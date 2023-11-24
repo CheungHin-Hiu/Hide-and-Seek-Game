@@ -42,13 +42,7 @@ public class TomController extends Thread{
         }
     }
 
-    private void pauser(){
-        try{
-            sleep(tomSpeed);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * The moveTom operation moves Tom's position, calls the ShortestPath to move near Jerry
