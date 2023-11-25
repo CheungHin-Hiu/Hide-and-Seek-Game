@@ -26,7 +26,6 @@ public class TomController extends Thread{
      * @param entryPoint Tom target destination is Jerry's position, which is equivalent to entry of the maze
      */
     TomController(Position exitPoint, Position entryPoint){
-
         Squares = Window.Grid;
         tomPosition = new Position(exitPoint);
         targetPosition = new Position(entryPoint);
@@ -34,7 +33,6 @@ public class TomController extends Thread{
         Position end = new Position(entryPoint.x, entryPoint.y);
         path = sp1.generateShortestPath(main.gameMaze.getMaze(), start, end);
     }
-
     /**
      * If the game has not finished
      * First check if any thread wins the game
@@ -51,28 +49,24 @@ public class TomController extends Thread{
             moveTom();
         }
     }
-
-
-
     /**
      * The moveTom operation moves Tom's position, calls the ShortestPath to move near Jerry
      */
     private void moveTom(){
+        if (path.length > 1) {
+            Position nextPosition = new Position(path[1].x, path[1].y);
+            Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(0);
 
-            if (path.length > 1) {
-                Position nextPosition = new Position(path[1].x, path[1].y);
-                Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(0);
+            tomPosition.changePosition(nextPosition.x, nextPosition.y);
+            Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(3);
 
-                tomPosition.changePosition(nextPosition.x, nextPosition.y);
-                Squares.get(tomPosition.x).get(tomPosition.y).lightMeUp(3);
+        }
+        targetPosition = new Position(JerryController.JerryPosition.x, JerryController.JerryPosition.y);
+        Position start = new Position(tomPosition.x, tomPosition.y);
+        Position end = new Position(targetPosition.x, targetPosition.y);
+        path = sp1.generateShortestPath(main.gameMaze.getMaze(), start, end);
 
-            }
-            targetPosition = new Position(JerryController.JerryPosition.x, JerryController.JerryPosition.y);
-            Position start = new Position(tomPosition.x, tomPosition.y);
-            Position end = new Position(targetPosition.x, targetPosition.y);
-            path = sp1.generateShortestPath(main.gameMaze.getMaze(), start, end);
-
-    }
+}
 
     /**
      * Checks if Jerry wins the game or Tom wins the game
@@ -100,7 +94,4 @@ public class TomController extends Thread{
     private void stopTheGame2(){
         running = false;
     }
-
-
-
 }
