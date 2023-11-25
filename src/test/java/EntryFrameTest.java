@@ -10,7 +10,7 @@ public class EntryFrameTest {
 
     @Test
     public void testEntryFrame() {
-        EntryFrame entryFrame = new EntryFrame();       //Target function to test
+        EntryFrame entryFrame = new EntryFrame();       //Target function
 
         // Testing the frame title
         assertEquals("Tom-and-Jerry: Hide and Seek", entryFrame.getTitle());

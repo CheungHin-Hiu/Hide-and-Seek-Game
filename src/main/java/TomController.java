@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * A thread used to represent Tom(computer in the game)
+ * The thread follows the computed shortest path with respect to Jerry
+ * The computer's target is to catch Jerry
+ */
 public class TomController extends Thread{
     ArrayList<ArrayList<DataOfSquare>> Squares = new ArrayList<ArrayList<DataOfSquare>>();
     public static Position tomPosition;
@@ -30,6 +35,11 @@ public class TomController extends Thread{
         path = sp1.generateShortestPath(main.gameMaze.getMaze(), start, end);
     }
 
+    /**
+     * If the game has not finished
+     * First check if any thread wins the game
+     * Then move the Jerry controller
+     */
     public void run(){
         while(running) {
             checkWinning();
@@ -64,6 +74,9 @@ public class TomController extends Thread{
 
     }
 
+    /**
+     * Checks if Jerry wins the game or Tom wins the game
+     */
     private void checkWinning(){
             if (WinCheck.tomWin) {
                 stopTheGame();
@@ -72,13 +85,18 @@ public class TomController extends Thread{
             }
 
     }
-
+    /**
+     * Toms wins the game, shows the lossing message, pauses the thread
+     */
     private void stopTheGame(){
         JOptionPane.showMessageDialog(null, "You lose! Don't give up and try again", "Match End", JOptionPane.INFORMATION_MESSAGE);
         running = false;
         main.gameWindow.dispose();
         EntryFrame f1 = new EntryFrame();
     }
+    /**
+     * Pause the thread
+     */
     private void stopTheGame2(){
         running = false;
     }
