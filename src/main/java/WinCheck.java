@@ -11,15 +11,15 @@ public class WinCheck extends Thread{
     public void run(){
 
         while(tomWin == false && jerryWin == false) {
-            checkWinning();
+            checkWinning(TomController.tomPosition, JerryController.JerryPosition, JerryController.Exit);
         }
     }
-    private void checkWinning(){
+    protected void checkWinning(Position tomPosition, Position jerryPosition, Position exitPosition){
         System.out.print("");
-        if (TomController.tomPosition.x == JerryController.JerryPosition.x && TomController.tomPosition.y ==JerryController.JerryPosition.y){
+        if (tomPosition.x == jerryPosition.x && tomPosition.y == jerryPosition.y){
             tomWin = true;
         }
-        else if(JerryController.JerryPosition.x == JerryController.Exit.x && JerryController.JerryPosition.y == JerryController.Exit.y)
+        else if(jerryPosition.x == exitPosition.x && jerryPosition.y == exitPosition.y)
             jerryWin = true;
     }
 
