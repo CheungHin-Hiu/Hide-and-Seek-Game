@@ -13,6 +13,7 @@ class PositionTest {
         assertEquals(testPosition.y, 1);
     }
 
+    @Test
     void copyConstructorTest(){
         Position targetPosition = new Position(12, 25);
         Position copyPosition = new Position(targetPosition);   //Test target
