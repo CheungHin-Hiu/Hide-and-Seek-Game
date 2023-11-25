@@ -26,8 +26,8 @@ public class MazeGeneratorTest {
     public void testMazePathCreation() {
         int dimension = 10;
         MazeGenerator generator = new MazeGenerator(dimension);
-        generator.generateMaze();
-        int[][] maze = generator.getMaze();                     //Target function
+        generator.generateMaze();                               //Target function
+        int[][] maze = generator.getMaze();
 
         boolean pathExists = false;
         for (int y = 0; y < dimension; y++) {
@@ -76,7 +76,7 @@ public class MazeGeneratorTest {
         }
 
         // Change the maze
-        generator.changeMaze(newMaze);
+        generator.changeMaze(newMaze);  //Target function
 
         // Retrieve the changed maze
         int[][] changedMaze = generator.getMaze();
