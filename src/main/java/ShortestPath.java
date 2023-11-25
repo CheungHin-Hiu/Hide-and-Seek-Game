@@ -10,7 +10,7 @@ public class ShortestPath { // initialize a new object of shortest_path, then ca
     final int COLNUM[] = {0, -1, 1, 0};
 
     private Position[] pathSequence; // this store the path sequence by calling appendArray();
-    Position[][] parents;
+    private Position[][] parents;
     /**
      * The generateShortestPath method generate the shortest path from the starting cell to the ending cell, use for displaying the shortest path from the entry of the maze to the end of the maze. Also used for Tom to find the shortest path to Jerry
      * @param Matrix The input matrix from manual create or random create
@@ -46,11 +46,6 @@ public class ShortestPath { // initialize a new object of shortest_path, then ca
             int x = curr[0];
             int y = curr[1];
             int d = curr[2];
-
-            // if the cell has already been visited, skip it
-            if (visited[x][y]) {
-                continue;
-            }
 
             visited[x][y] = true; // mark the current cell as visited
 
