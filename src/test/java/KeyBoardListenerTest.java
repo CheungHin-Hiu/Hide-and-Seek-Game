@@ -11,7 +11,7 @@ public class KeyBoardListenerTest {
         JerryController controller = new JerryController(new Position(1,2), new Position(2,1));
         KeyBoardListener listener = new KeyBoardListener();
         KeyEvent event = new KeyEvent(new Component() {}, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
-        listener.keyPressed(event);
+        listener.keyPressed(event); //Tar
         controller.start();
         assertEquals(1, JerryController.JerryDirection);
     }
@@ -34,7 +34,7 @@ public class KeyBoardListenerTest {
         assertEquals(2, JerryController.JerryDirection);
     }
     @Test
-    public void testKeyPressedLeftWithJerryController() {
+    public void testKeyPressedDown() {
         JerryController controller = new JerryController(new Position(1,2), new Position(10, 20));
         KeyBoardListener listener = new KeyBoardListener(); //Target function
         KeyEvent event = new KeyEvent(new Component() {}, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_DOWN, KeyEvent.CHAR_UNDEFINED);
