@@ -13,7 +13,7 @@ public class WindowTest {
         testGUIMaze.generateMaze();
         testGUIMaze.addPaths(30);
         int[][] maze = testGUIMaze.getMaze();
-        Window window = new Window(maze);       //Test function
+        Window window = new Window(maze);       //Target function
 
         // Test layout
         assertTrue(window.getContentPane().getLayout() instanceof GridLayout);
@@ -45,5 +45,4 @@ public class WindowTest {
         assertTrue(window.getKeyListeners()[0] instanceof KeyBoardListener);
     }
 
-    // Add more test cases as needed
 }

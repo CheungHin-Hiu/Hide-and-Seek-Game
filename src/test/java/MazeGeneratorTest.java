@@ -6,7 +6,7 @@ public class MazeGeneratorTest {
     @Test
     public void testMazeDimensions() {
         int dimension = 10;
-        MazeGenerator generator = new MazeGenerator(dimension);
+        MazeGenerator generator = new MazeGenerator(dimension);     //Target functions
         assertEquals("The maze should be of the given dimension.", dimension, generator.getDimension());
     }
 
@@ -14,7 +14,7 @@ public class MazeGeneratorTest {
     public void testMazeInitialization() {
         int dimension = 10;
         MazeGenerator generator = new MazeGenerator(dimension);
-        int[][] maze = generator.getMaze();
+        int[][] maze = generator.getMaze();                         //Target function
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
                 assertEquals("Maze should be initialized with walls (1).", 1, maze[y][x]);
@@ -27,7 +27,7 @@ public class MazeGeneratorTest {
         int dimension = 10;
         MazeGenerator generator = new MazeGenerator(dimension);
         generator.generateMaze();
-        int[][] maze = generator.getMaze();
+        int[][] maze = generator.getMaze();                     //Target function
 
         boolean pathExists = false;
         for (int y = 0; y < dimension; y++) {
@@ -49,7 +49,7 @@ public class MazeGeneratorTest {
         int numWallsToBreak = 5;
         MazeGenerator generator = new MazeGenerator(dimension);
         generator.generateMaze();
-        generator.addPaths(numWallsToBreak);
+        generator.addPaths(numWallsToBreak);                    //Target function
 
         int[][] maze = generator.getMaze();
         int pathCount = 0;

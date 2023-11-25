@@ -10,7 +10,7 @@ class SelectionFrameTest {
 
     @Test
     public void testSelectionFrame(){
-        SelectionFrame selectionFrame = new SelectionFrame();
+        SelectionFrame selectionFrame = new SelectionFrame();               //Target function
 
         //Testing the frame title
         assertEquals("Maze Creation", selectionFrame.getTitle());

@@ -10,7 +10,7 @@ public class MazeGridTest {
     @Test
     public void testConstructor(){
         Color testColour = Color.RED;
-        MazeGrid testGrid = new MazeGrid(testColour);
+        MazeGrid testGrid = new MazeGrid(testColour);           //Target function
         assertEquals(testColour, testGrid.getBackground());
     }
 

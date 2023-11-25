@@ -1,4 +1,8 @@
 import java.util.*;
+
+/**
+ * Used to compute the shortest path between 2 points
+ */
 public class ShortestPath { // initialize a new object of shortest_path, then call with generateShortestPath operation
     int INF = Integer.MAX_VALUE;
     int ROW, COL;
