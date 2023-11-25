@@ -61,4 +61,38 @@ public class MazeGeneratorTest {
 
         assertTrue("The number of paths should be increased after adding paths.", pathCount > numWallsToBreak);
     }
+
+    @Test
+    public void testChangeMaze() {
+        int dimension = 10;
+        MazeGenerator generator = new MazeGenerator(dimension);
+
+        // Create a new maze configuration to change to
+        int[][] newMaze = new int[dimension][dimension];
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                newMaze[y][x] = (x + y) % 2; // Simple checkerboard pattern for test
+            }
+        }
+
+        // Change the maze
+        generator.changeMaze(newMaze);
+
+        // Retrieve the changed maze
+        int[][] changedMaze = generator.getMaze();
+
+        // Check if the maze has been updated correctly
+        boolean isChangedCorrectly = true;
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (changedMaze[y][x] != newMaze[y][x]) {
+                    isChangedCorrectly = false;
+                    break;
+                }
+            }
+            if (!isChangedCorrectly) break;
+        }
+
+        assertTrue("The maze should be updated with the new configuration.", isChangedCorrectly);
+    }
 }
