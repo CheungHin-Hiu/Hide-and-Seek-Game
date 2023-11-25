@@ -6,7 +6,7 @@ class ShortestPathTest {
     @Test
     void generateShortestPath() {
         // testing if it can return the shortest path, covering line 18-73
-        int[][] tnjMaze = ReadCSV.readCSV("C:\\Users\\asus\\Desktop\\Academic\\UST\\academic\\Year 3\\COMP3111\\Lab\\Comp3111F23G59\\MazaMap_TnJ.csv");
+        int[][] tnjMaze = ReadCSV.readCSV("MazaMap_TnJ.csv");
         int[][] expected1 = new int[][] {
                 {12,0}, {12,1}, {12,2}, {13,2}, {13,3}, {13,4}, {14,4}, {14,5}, {14,6}, {14,7},
                 {14,8}, {13,8}, {12,8}, {12,9}, {12,10}, {11,10}, {10,10}, {10,11}, {10,12}, {9,12},
